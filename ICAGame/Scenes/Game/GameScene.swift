@@ -30,6 +30,9 @@ class GameScene: SKScene {
     
     let userDefaults = UserDefaults.standard
     
+    var touched : Bool = false
+    var location = CGPoint.zero
+    
     override func didMove(to view: SKView) {
         setupLives()
         setupStarField()
@@ -38,6 +41,7 @@ class GameScene: SKScene {
         setupScoreLabel()
         setupAliensAndAsteroids()
         setupCoreMotion()
+        movePlayerToLocation()
     }
     
     func setupLives() {
@@ -102,29 +106,28 @@ class GameScene: SKScene {
     }
     
     @objc func addAliensAndAsteroids() {
-        //Shuffled array of attackers
         attackers = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: attackers) as! [String]
-        let attaker = SKSpriteNode(imageNamed: attackers[0])
-        let attakerPosition = GKRandomDistribution(lowestValue: 0, highestValue: Int(frame.size.width))
-        let position = CGFloat(attakerPosition.nextInt())
-        attaker.size = CGSize(width: 60, height: 60)
-        attaker.position = CGPoint(x: position, y: frame.size.height + attaker.size.height)
-        attaker.physicsBody = SKPhysicsBody(circleOfRadius: attaker.size.width/2)
+        let attacker = SKSpriteNode(imageNamed: attackers[0])
+        let attackerPosition = GKRandomDistribution(lowestValue: 0, highestValue: Int(frame.size.width))
+        let position = CGFloat(attackerPosition.nextInt())
+        attacker.size = CGSize(width: 60, height: 60)
+        attacker.position = CGPoint(x: position, y: frame.size.height + attacker.size.height)
+        attacker.physicsBody = SKPhysicsBody(circleOfRadius: attacker.size.width/2)
         
-        attaker.physicsBody?.categoryBitMask = alienCategory
-        attaker.physicsBody?.contactTestBitMask = torpedoCategory
-        attaker.physicsBody?.collisionBitMask = 0
+        attacker.physicsBody?.categoryBitMask = alienCategory
+        attacker.physicsBody?.contactTestBitMask = torpedoCategory
+        attacker.physicsBody?.collisionBitMask = 0
         
-        addChild(attaker)
+        addChild(attacker)
         
         let animationDuration = difficultManager.getAlienAnimationDutationInterval()
         
         var actionArray = [SKAction]()
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attaker.size.height), duration: animationDuration))
+        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attacker.size.height), duration: animationDuration))
         actionArray.append(SKAction.run(alienGotBase))
         actionArray.append(SKAction.removeFromParent())
         
-        attaker.run(SKAction.sequence(actionArray))
+        attacker.run(SKAction.sequence(actionArray))
     }
     
     func alienGotBase() {
@@ -142,12 +145,38 @@ class GameScene: SKScene {
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touched = true
+        for touch in touches {
+            location = touch.location(in: self)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            location = touch.location(in: self)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireTorpedo()
+        touched = false
+    }
+    override func update(_ currentTime: TimeInterval) {
+        if (touched) {
+            movePlayerToLocation()
+        }
+    }
+    
+    func movePlayerToLocation() {
+        var dx = location.x - player.position.x
+        var dy = location.y - player.position.y
+        
+        let speed: CGFloat = 0.25
+        
+        dx = dx * speed
+        dy = dy * speed
+        player.position = CGPoint(x: player.position.x + dx, y: player.position.y + dy)
     }
     
     func fireTorpedo() {

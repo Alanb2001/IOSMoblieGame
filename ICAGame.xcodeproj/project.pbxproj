@@ -12,7 +12,6 @@
 		F441EDC423A7ADE500F04944 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDC323A7ADE500F04944 /* GameViewController.swift */; };
 		F441EDC723A7ADE500F04944 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F441EDC523A7ADE500F04944 /* Main.storyboard */; };
 		F441EDC923A7ADE600F04944 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F441EDC823A7ADE600F04944 /* Assets.xcassets */; };
-		F441EDCC23A7ADE600F04944 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F441EDCA23A7ADE600F04944 /* LaunchScreen.storyboard */; };
 		F441EDD523A7BA5700F04944 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F441EDD323A7BA5600F04944 /* explosion.mp3 */; };
 		F441EDD623A7BA5700F04944 /* torpedo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F441EDD423A7BA5700F04944 /* torpedo.mp3 */; };
 		F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = F441EDD923A7BD3100F04944 /* Explosion.sks */; };
@@ -35,7 +34,6 @@
 		F441EDC323A7ADE500F04944 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		F441EDC623A7ADE500F04944 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F441EDC823A7ADE600F04944 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F441EDCB23A7ADE600F04944 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F441EDCD23A7ADE600F04944 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F441EDD323A7BA5600F04944 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		F441EDD423A7BA5700F04944 /* torpedo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = torpedo.mp3; sourceTree = "<group>"; };
@@ -90,7 +88,6 @@
 				F441EDBB23A7ADE500F04944 /* AppDelegate.swift */,
 				F441EDC323A7ADE500F04944 /* GameViewController.swift */,
 				F441EDC523A7ADE500F04944 /* Main.storyboard */,
-				F441EDCA23A7ADE600F04944 /* LaunchScreen.storyboard */,
 			);
 			path = ICAGame;
 			sourceTree = "<group>";
@@ -206,7 +203,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1240;
-				ORGANIZATIONNAME = "Julio Collado";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					F441EDB723A7ADE500F04944 = {
 						CreatedOnToolsVersion = 11.0;
@@ -243,7 +240,6 @@
 				F441EDC923A7ADE600F04944 /* Assets.xcassets in Resources */,
 				F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */,
 				F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */,
-				F441EDCC23A7ADE600F04944 /* LaunchScreen.storyboard in Resources */,
 				F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */,
 				F4F84A4523AA55530002AEFA /* GameOver.sks in Resources */,
 				F4F84A4223AA52910002AEFA /* gameOver.mp3 in Resources */,
@@ -277,14 +273,6 @@
 				F441EDC623A7ADE500F04944 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		F441EDCA23A7ADE600F04944 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F441EDCB23A7ADE600F04944 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -341,7 +329,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -396,7 +384,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
