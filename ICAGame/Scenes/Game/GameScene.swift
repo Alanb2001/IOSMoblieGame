@@ -7,6 +7,7 @@ class GameScene: SKScene {
     var starField: SKEmitterNode!
     var playerNode: SKSpriteNode!
     var scoreLabel: SKLabelNode!
+    var sceneButton: SKSpriteNode!
     
     let difficultManager = DifficultyManager()
     
@@ -27,7 +28,7 @@ class GameScene: SKScene {
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
     
-    var livesArray: [SKSpriteNode]!
+    //var livesArray: [SKSpriteNode]!
     
     let userDefaults = UserDefaults.standard
     
@@ -35,28 +36,29 @@ class GameScene: SKScene {
     var location = CGPoint.zero
     
     override func didMove(to view: SKView) {
-        setupLives()
+        //setupLives()
         setupStarField()
         setupPlayer()
         setupPhisicsWord()
         setupScoreLabel()
+        setupSceneButton()
         setupAliensAndAsteroids()
         setupCoreMotion()
         movePlayerToLocation()
     }
     
-    func setupLives() {
-        livesArray = [SKSpriteNode]()
-        for life in 1...3 {
-            let lifeNode = SKSpriteNode(imageNamed: "spaceship")
-            lifeNode.size = CGSize(width: 44, height: 44)
-            lifeNode.zPosition = 5
-            lifeNode.position = CGPoint(x: self.frame.size.width - CGFloat(4 - life) * lifeNode.size.width, y: frame.size.height - 50)
-            self.addChild(lifeNode)
-            livesArray.append(lifeNode)
-        }
-        
-    }
+    //func setupLives() {
+    //    livesArray = [SKSpriteNode]()
+    //    for life in 1...3 {
+    //        let lifeNode = SKSpriteNode(imageNamed: "spaceship")
+    //        lifeNode.size = CGSize(width: 44, height: 44)
+    //        lifeNode.zPosition = 5
+    //        lifeNode.position = CGPoint(x: self.frame.size.width - CGFloat(4 - life) * //lifeNode.size.width, y: frame.size.height - 50)
+    //        self.addChild(lifeNode)
+    //        livesArray.append(lifeNode)
+    //    }
+    //
+    //}
     
     func setupCoreMotion() {
         motionManager.accelerometerUpdateInterval = 0.2
@@ -65,7 +67,6 @@ class GameScene: SKScene {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
             }
-            
         }
     }
     
@@ -77,7 +78,6 @@ class GameScene: SKScene {
     
     func setupStarField() {
         starField = SKEmitterNode(fileNamed: "Starfield")
-        
         starField.position = CGPoint(x: 0, y: self.frame.maxY)
         starField.advanceSimulationTime(10)
         addChild(starField)
@@ -108,6 +108,13 @@ class GameScene: SKScene {
         addChild(scoreLabel)
     }
     
+    func setupSceneButton() {
+        sceneButton = SKSpriteNode(imageNamed: "home")
+        sceneButton.position = CGPoint(x: (sceneButton.frame.width / 2) + 10, y: frame.size.height - 100)
+        sceneButton.zPosition = 5
+        addChild(sceneButton)
+    }
+    
     func setupAliensAndAsteroids() {
         let timeInterval = difficultManager.getAlienAparitionInterval()
         gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAliensAndAsteroids), userInfo: nil, repeats: true)
@@ -132,32 +139,40 @@ class GameScene: SKScene {
         
         var actionArray = [SKAction]()
         actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attacker.size.height), duration: animationDuration))
-        actionArray.append(SKAction.run(alienGotBase))
+        //actionArray.append(SKAction.run(alienGotBase))
         actionArray.append(SKAction.removeFromParent())
         
         attacker.run(SKAction.sequence(actionArray))
     }
     
-    func alienGotBase() {
-        run(SKAction.playSoundFileNamed("looseLife.mp3", waitForCompletion: false))
-        if livesArray.count > 0 {
-            let lifeNode = livesArray.first
-            lifeNode?.removeFromParent()
-            livesArray.removeFirst()
-        }
-        if livesArray.count == 0 {
-            let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameScene = SKScene(fileNamed: "GameOver") as! GameOver
-            gameScene.score = self.score
-            self.view?.presentScene(gameScene, transition: transition)
-        }
-    }
+    //func alienGotBase() {
+    //    run(SKAction.playSoundFileNamed("looseLife.mp3", waitForCompletion: false))
+    //    if livesArray.count > 0 {
+    //        let lifeNode = livesArray.first
+    //        lifeNode?.removeFromParent()
+    //        livesArray.removeFirst()
+    //    }
+    //    if livesArray.count == 0 {
+    //        let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+    //        let gameScene = SKScene(fileNamed: "GameOver") as! GameOver
+    //        gameScene.score = self.score
+    //        self.view?.presentScene(gameScene, transition: transition)
+    //    }
+    //}
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let nodesArray = self.nodes(at: location)
+        if nodesArray.first.self == sceneButton {
+            let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = SKScene(fileNamed: "GameOver") as! GameOver
+            gameOverScene.score = self.score
+            self.view?.presentScene(gameOverScene, transition: transition)
+        }
+        
         touched = true
         for touch in touches {
             location = touch.location(in: self)
-        }
+            }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -170,6 +185,7 @@ class GameScene: SKScene {
         //fireTorpedo()
         touched = false
     }
+    
     override func update(_ currentTime: TimeInterval) {
         if (touched) {
             movePlayerToLocation()
