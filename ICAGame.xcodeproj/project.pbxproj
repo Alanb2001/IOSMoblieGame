@@ -18,9 +18,6 @@
 		F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = F441EDDB23A7BD4800F04944 /* Starfield.sks */; };
 		F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F4A16E3123A916BE0001BDAF /* MenuScene.sks */; };
 		F4A16E3423A919030001BDAF /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A16E3323A919030001BDAF /* MenuScene.swift */; };
-		F4A16E3723A9457E0001BDAF /* DifficultyOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A16E3623A9457E0001BDAF /* DifficultyOptions.swift */; };
-		F4A16E3A23A953F70001BDAF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A16E3923A953F70001BDAF /* Constants.swift */; };
-		F4A16E4123A95C520001BDAF /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A16E4023A95C520001BDAF /* DifficultyManager.swift */; };
 		F4F84A4223AA52910002AEFA /* gameOver.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4023AA52910002AEFA /* gameOver.mp3 */; };
 		F4F84A4323AA52910002AEFA /* looseLife.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4123AA52910002AEFA /* looseLife.mp3 */; };
 		F4F84A4523AA55530002AEFA /* GameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4423AA55530002AEFA /* GameOver.sks */; };
@@ -41,9 +38,6 @@
 		F441EDDB23A7BD4800F04944 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		F4A16E3123A916BE0001BDAF /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		F4A16E3323A919030001BDAF /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
-		F4A16E3623A9457E0001BDAF /* DifficultyOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyOptions.swift; sourceTree = "<group>"; };
-		F4A16E3923A953F70001BDAF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		F4A16E4023A95C520001BDAF /* DifficultyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManager.swift; sourceTree = "<group>"; };
 		F4F84A4023AA52910002AEFA /* gameOver.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOver.mp3; sourceTree = "<group>"; };
 		F4F84A4123AA52910002AEFA /* looseLife.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = looseLife.mp3; sourceTree = "<group>"; };
 		F4F84A4423AA55530002AEFA /* GameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOver.sks; sourceTree = "<group>"; };
@@ -80,10 +74,7 @@
 		F441EDBA23A7ADE500F04944 /* ICAGame */ = {
 			isa = PBXGroup;
 			children = (
-				F4A16E3E23A95C400001BDAF /* Common */,
 				F4A16E3B23A958FA0001BDAF /* Scenes */,
-				F4A16E3823A953E70001BDAF /* Constants */,
-				F4A16E3523A945620001BDAF /* Model */,
 				F441EDDF23A7BE5500F04944 /* Resources */,
 				F441EDBB23A7ADE500F04944 /* AppDelegate.swift */,
 				F441EDC323A7ADE500F04944 /* GameViewController.swift */,
@@ -105,22 +96,6 @@
 				F441EDDB23A7BD4800F04944 /* Starfield.sks */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		F4A16E3523A945620001BDAF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				F4A16E3623A9457E0001BDAF /* DifficultyOptions.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		F4A16E3823A953E70001BDAF /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				F4A16E3923A953F70001BDAF /* Constants.swift */,
-			);
-			path = Constants;
 			sourceTree = "<group>";
 		};
 		F4A16E3B23A958FA0001BDAF /* Scenes */ = {
@@ -148,22 +123,6 @@
 				F441EDC123A7ADE500F04944 /* GameScene.swift */,
 			);
 			path = Game;
-			sourceTree = "<group>";
-		};
-		F4A16E3E23A95C400001BDAF /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				F4A16E3F23A95C460001BDAF /* Utils */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		F4A16E3F23A95C460001BDAF /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				F4A16E4023A95C520001BDAF /* DifficultyManager.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		F4F84A4623AA55620002AEFA /* GameOver */ = {
@@ -256,10 +215,7 @@
 				F441EDC223A7ADE500F04944 /* GameScene.swift in Sources */,
 				F4A16E3423A919030001BDAF /* MenuScene.swift in Sources */,
 				F441EDC423A7ADE500F04944 /* GameViewController.swift in Sources */,
-				F4A16E4123A95C520001BDAF /* DifficultyManager.swift in Sources */,
 				F441EDBC23A7ADE500F04944 /* AppDelegate.swift in Sources */,
-				F4A16E3723A9457E0001BDAF /* DifficultyOptions.swift in Sources */,
-				F4A16E3A23A953F70001BDAF /* Constants.swift in Sources */,
 				F4F84A4823AA55760002AEFA /* GameOver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,10 @@ class GameOver: SKScene {
     
     var score: Int = 0
     
+    deinit {
+        print("GameOverScene done")
+    }
+    
     override func didMove(to view: SKView) {
         setupStarField()
         setupScoreNumberLabel()
@@ -39,13 +43,13 @@ class GameOver: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         guard let location = touch?.location(in: self) else { return }
-        let node = self.nodes(at: location)
-        if node.first?.name == "newGameButton" {
+        let node = nodes(at: location)
+        if node[0].name == "newGameButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameScene = GameScene(size: self.size)
-            gameScene.scoreLabel = self.scoreNumberLabel
+            gameScene.score = self.score
             self.view?.presentScene(gameScene, transition: transition)
-        } else  if node.first?.name == "menuButton" {
+        } else  if node[0].name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = SKScene(fileNamed: "MenuScene")!
             self.view?.presentScene(gameOverScene, transition: transition)
