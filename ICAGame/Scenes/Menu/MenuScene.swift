@@ -27,7 +27,7 @@ class MenuScene: SKScene {
         let nodesArray = self.nodes(at: location)
         if nodesArray.first?.name == newGameButtonName {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameScene = GameScene(size: self.size)
+            let gameScene = GameScene(size: self.size) 
             self.view?.presentScene(gameScene, transition: transition)
     }
 }

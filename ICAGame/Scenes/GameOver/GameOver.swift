@@ -6,8 +6,11 @@ class GameOver: SKScene {
     var scoreNumberLabel: SKLabelNode!
     var newGameButtonNode: SKSpriteNode!
     var menuButtonNode: SKSpriteNode!
+    var capacityNumberLabel: SKLabelNode!
+    var shakeButtonNode: SKSpriteNode!
     
-    var score: Int = 0
+    var money: Int = 0
+    var capacity: Int = 0
     
     deinit {
         print("GameOverScene done")
@@ -16,8 +19,10 @@ class GameOver: SKScene {
     override func didMove(to view: SKView) {
         setupStarField()
         setupScoreNumberLabel()
+        setupCapacityNumberLabel()
         setupNewGameButton()
         setupMenuButtonNode()
+        setupShakeButton()
     }
     
     func setupMenuButtonNode() {
@@ -32,12 +37,28 @@ class GameOver: SKScene {
     
     func setupScoreNumberLabel() {
         scoreNumberLabel = self.childNode(withName: "scoreNumberLabel") as? SKLabelNode
-        scoreNumberLabel.text = "\(score)"
+        scoreNumberLabel.text = "\(money)"
+    }
+    
+    func setupCapacityNumberLabel() {
+        capacityNumberLabel = self.childNode(withName: "capacityNumberLabel") as? SKLabelNode
+        capacityNumberLabel.text = "\(capacity)"
+        
     }
     
     func setupNewGameButton() {
         newGameButtonNode = self.childNode(withName: "newGameButton") as? SKSpriteNode
         newGameButtonNode.texture = SKTexture(imageNamed: "newGameButton")
+    }
+    
+    func setupShakeButton() {
+        shakeButtonNode = self.childNode(withName: "shakeButton") as? SKSpriteNode
+        shakeButtonNode.texture = SKTexture(imageNamed: "newGameButton")
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        scoreNumberLabel.text = "Money: \(money)"
+        capacityNumberLabel.text = "Capacity: \(capacity)"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -47,12 +68,20 @@ class GameOver: SKScene {
         if node[0].name == "newGameButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameScene = GameScene(size: self.size)
-            gameScene.score = self.score
+            gameScene.money = self.money
+            gameScene.capacity = self.capacity
             self.view?.presentScene(gameScene, transition: transition)
-        } else  if node[0].name == "menuButton" {
+        } else if node[0].name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = SKScene(fileNamed: "MenuScene")!
+            let gameOverScene = SKScene(fileNamed: "MenuScene") as! MenuScene
             self.view?.presentScene(gameOverScene, transition: transition)
+        } else  if node[0].name == "shakeButton" {
+            capacity -= 1
+            money += 5
+            if (capacity == -1) {
+             capacity += 1
+                money -= 5
+            }
         }
     }
     

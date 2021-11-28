@@ -6,11 +6,13 @@ class GameScene: SKScene {
     
     var starField: SKEmitterNode!
     var playerNode: SKSpriteNode!
-    var scoreLabel: SKLabelNode!
+    var moneyLabel: SKLabelNode!
+    var capacityLabel: SKLabelNode!
     var sceneButton: SKSpriteNode!
     
-    var score: Int = 0
-
+    var money: Int = 0
+    var capacity: Int = 0
+    
     var gameTimer: Timer!
     var attackers = ["meteor","alien"]
     
@@ -34,6 +36,7 @@ class GameScene: SKScene {
         setupPlayer()
         setupPhisicsWord()
         setupScoreLabel()
+        setupCapacityLabel()
         setupSceneButton()
         setupAliensAndAsteroids()
         setupCoreMotion()
@@ -79,18 +82,28 @@ class GameScene: SKScene {
     }
     
     func setupScoreLabel() {
-        scoreLabel = SKLabelNode(text: "Score: 0")
-        scoreLabel.position = CGPoint(x: (scoreLabel.frame.width / 2) + 10, y: frame.size.height - 50)
-        scoreLabel.zPosition = 5
-        scoreLabel.fontSize = 25
-        scoreLabel.fontName = "AmericanTypewriter-Bold"
-        scoreLabel.color = .white
-        addChild(scoreLabel)
+        moneyLabel = SKLabelNode(text: "Money: 0")
+        moneyLabel.position = CGPoint(x: (moneyLabel.frame.width / 2) + 10, y: frame.size.height - 50)
+        moneyLabel.zPosition = 5
+        moneyLabel.fontSize = 25
+        moneyLabel.fontName = "AmericanTypewriter-Bold"
+        moneyLabel.color = .white
+        addChild(moneyLabel)
+    }
+    
+    func setupCapacityLabel() {
+        capacityLabel = SKLabelNode(text: "Capacity: 0")
+        capacityLabel.position = CGPoint(x: (capacityLabel.frame.width / 2) + 10, y: frame.size.height - 100)
+        capacityLabel.zPosition = 5
+        capacityLabel.fontSize = 25
+        capacityLabel.fontName = "AmericanTypewriter-Bold"
+        capacityLabel.color = .white
+        addChild(capacityLabel)
     }
     
     func setupSceneButton() {
         sceneButton = SKSpriteNode(imageNamed: "home")
-        sceneButton.position = CGPoint(x: (sceneButton.frame.width / 2) + 10, y: frame.size.height - 100)
+        sceneButton.position = CGPoint(x: (sceneButton.frame.width / 2) + 10, y: frame.size.height - 150)
         sceneButton.zPosition = 5
         addChild(sceneButton)
     }
@@ -132,9 +145,13 @@ class GameScene: SKScene {
             if nodesArray.first == sceneButton {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let gameOverScene = SKScene(fileNamed: "GameOver") as! GameOver
-                gameOverScene.score = self.score
+                gameOverScene.money = self.money
+                gameOverScene.capacity = self.capacity
                 gameOverScene.self.view?.presentScene(nil)
                 self.view?.presentScene(gameOverScene, transition: transition)
+                self.scene?.removeAllActions()
+                self.scene?.removeAllChildren()
+                self.scene?.removeFromParent()
             }
         }
     }
@@ -150,7 +167,8 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        scoreLabel.text = "Socre: \(score)"
+        moneyLabel.text = "Money: \(money)"
+        capacityLabel.text = "Capacity: \(capacity)"
         if (touched) {
             movePlayerToLocation()
         }
@@ -200,7 +218,12 @@ extension GameScene: SKPhysicsContactDelegate {
         run(SKAction.wait(forDuration: 1)) {
             explosion.removeFromParent()
         }
-        score += 5
+        capacity += 1
+        
+        if(capacity == 6)
+        {
+            capacity -= 1
+        }
     }
     
     override func didSimulatePhysics() {
