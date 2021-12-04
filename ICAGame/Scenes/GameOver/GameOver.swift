@@ -8,9 +8,14 @@ class GameOver: SKScene {
     var menuButtonNode: SKSpriteNode!
     var capacityNumberLabel: SKLabelNode!
     var shakeButtonNode: SKSpriteNode!
+    var upgradeButtonNode: SKSpriteNode!
     
     var money: Int = 0
     var capacity: Int = 0
+    var upgradeCapacity: Int = 1
+    var moneyNeededCapacity: Int = 1
+    
+    let userDefaults = UserDefaults.standard
     
     deinit {
         print("GameOverScene done")
@@ -23,6 +28,7 @@ class GameOver: SKScene {
         setupNewGameButton()
         setupMenuButtonNode()
         setupShakeButton()
+        setupUpgradeButton()
     }
     
     func setupMenuButtonNode() {
@@ -43,7 +49,6 @@ class GameOver: SKScene {
     func setupCapacityNumberLabel() {
         capacityNumberLabel = self.childNode(withName: "capacityNumberLabel") as? SKLabelNode
         capacityNumberLabel.text = "\(capacity)"
-        
     }
     
     func setupNewGameButton() {
@@ -54,6 +59,11 @@ class GameOver: SKScene {
     func setupShakeButton() {
         shakeButtonNode = self.childNode(withName: "shakeButton") as? SKSpriteNode
         shakeButtonNode.texture = SKTexture(imageNamed: "newGameButton")
+    }
+    
+    func setupUpgradeButton() {
+        upgradeButtonNode = self.childNode(withName: "upgradeButton") as? SKSpriteNode
+        upgradeButtonNode.texture = SKTexture(imageNamed: "home")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -70,6 +80,8 @@ class GameOver: SKScene {
             let gameScene = GameScene(size: self.size)
             gameScene.money = self.money
             gameScene.capacity = self.capacity
+            gameScene.upgradeCapacity = self.upgradeCapacity
+            gameScene.moneyNeededCapacity = self.moneyNeededCapacity
             self.view?.presentScene(gameScene, transition: transition)
         } else if node[0].name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
@@ -78,9 +90,15 @@ class GameOver: SKScene {
         } else  if node[0].name == "shakeButton" {
             capacity -= 1
             money += 5
-            if (capacity == -1) {
+            if capacity == -1 {
              capacity += 1
                 money -= 5
+            }
+        } else if node[0].name == "upgradeButton" {
+            if money >= 50 * moneyNeededCapacity {
+                money -= 50 * moneyNeededCapacity
+                upgradeCapacity += 1
+                moneyNeededCapacity += 1
             }
         }
     }

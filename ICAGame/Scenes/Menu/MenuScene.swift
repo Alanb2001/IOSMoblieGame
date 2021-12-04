@@ -9,8 +9,6 @@ class MenuScene: SKScene {
     
     let newGameButtonName = "newGameButton"
     
-    let userDefaults = UserDefaults.standard
-    
     deinit {
         print("MenuScene done")
     }

@@ -12,7 +12,9 @@ class GameScene: SKScene {
     
     var money: Int = 0
     var capacity: Int = 0
-    
+    var upgradeCapacity: Int = 1
+    var moneyNeededCapacity: Int = 1
+
     var gameTimer: Timer!
     var attackers = ["meteor","alien"]
     
@@ -147,6 +149,8 @@ class GameScene: SKScene {
                 let gameOverScene = SKScene(fileNamed: "GameOver") as! GameOver
                 gameOverScene.money = self.money
                 gameOverScene.capacity = self.capacity
+                gameOverScene.upgradeCapacity = self.upgradeCapacity
+                gameOverScene.moneyNeededCapacity = self.moneyNeededCapacity
                 gameOverScene.self.view?.presentScene(nil)
                 self.view?.presentScene(gameOverScene, transition: transition)
                 self.scene?.removeAllActions()
@@ -220,7 +224,7 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         capacity += 1
         
-        if(capacity == 6)
+        if capacity == 6 * upgradeCapacity
         {
             capacity -= 1
         }
