@@ -8,12 +8,14 @@ class GameScene: SKScene {
     var playerNode: SKSpriteNode!
     var moneyLabel: SKLabelNode!
     var capacityLabel: SKLabelNode!
-    var sceneButton: SKSpriteNode!
+    var shopButton: SKSpriteNode!
     
     var money: Int = 0
     var capacity: Int = 0
     var upgradeCapacity: Int = 1
     var moneyNeededCapacity: Int = 1
+    var upgradeMoney: Int = 1
+    var moneyNeededMoney: Int = 1
 
     var gameTimer: Timer!
     var attackers = ["meteor","alien"]
@@ -39,7 +41,7 @@ class GameScene: SKScene {
         setupPhisicsWord()
         setupScoreLabel()
         setupCapacityLabel()
-        setupSceneButton()
+        setupShopButton()
         setupAliensAndAsteroids()
         setupCoreMotion()
         movePlayerToLocation()
@@ -58,7 +60,7 @@ class GameScene: SKScene {
     func setupPhisicsWord() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
-        backgroundColor = .black
+        backgroundColor = .blue
     }
     
     func setupStarField() {
@@ -103,11 +105,11 @@ class GameScene: SKScene {
         addChild(capacityLabel)
     }
     
-    func setupSceneButton() {
-        sceneButton = SKSpriteNode(imageNamed: "home")
-        sceneButton.position = CGPoint(x: (sceneButton.frame.width / 2) + 10, y: frame.size.height - 150)
-        sceneButton.zPosition = 5
-        addChild(sceneButton)
+    func setupShopButton() {
+        shopButton = SKSpriteNode(imageNamed: "shoppingCart")
+        shopButton.position = CGPoint(x: (shopButton.frame.width / 2) + 10, y: frame.size.height - 150)
+        shopButton.zPosition = 5
+        addChild(shopButton)
     }
     
     func setupAliensAndAsteroids() {
@@ -144,15 +146,17 @@ class GameScene: SKScene {
         for touch in touches {
             location = touch.location(in: self)
             let nodesArray = nodes(at: location)
-            if nodesArray.first == sceneButton {
+            if nodesArray.first == shopButton {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = SKScene(fileNamed: "GameOver") as! GameOver
-                gameOverScene.money = self.money
-                gameOverScene.capacity = self.capacity
-                gameOverScene.upgradeCapacity = self.upgradeCapacity
-                gameOverScene.moneyNeededCapacity = self.moneyNeededCapacity
-                gameOverScene.self.view?.presentScene(nil)
-                self.view?.presentScene(gameOverScene, transition: transition)
+                let shopScene = SKScene(fileNamed: "Shop") as! Shop
+                shopScene.money = self.money
+                shopScene.capacity = self.capacity
+                shopScene.upgradeCapacity = self.upgradeCapacity
+                shopScene.moneyNeededCapacity = self.moneyNeededCapacity
+                shopScene.upgradeMoney = self.upgradeMoney
+                shopScene.moneyNeededMoney = self.moneyNeededMoney
+                shopScene.self.view?.presentScene(nil)
+                self.view?.presentScene(shopScene, transition: transition)
                 self.scene?.removeAllActions()
                 self.scene?.removeAllChildren()
                 self.scene?.removeFromParent()

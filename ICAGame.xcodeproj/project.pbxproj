@@ -20,8 +20,8 @@
 		F4A16E3423A919030001BDAF /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A16E3323A919030001BDAF /* MenuScene.swift */; };
 		F4F84A4223AA52910002AEFA /* gameOver.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4023AA52910002AEFA /* gameOver.mp3 */; };
 		F4F84A4323AA52910002AEFA /* looseLife.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4123AA52910002AEFA /* looseLife.mp3 */; };
-		F4F84A4523AA55530002AEFA /* GameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4423AA55530002AEFA /* GameOver.sks */; };
-		F4F84A4823AA55760002AEFA /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F84A4723AA55760002AEFA /* GameOver.swift */; };
+		F4F84A4523AA55530002AEFA /* Shop.sks in Resources */ = {isa = PBXBuildFile; fileRef = F4F84A4423AA55530002AEFA /* Shop.sks */; };
+		F4F84A4823AA55760002AEFA /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F84A4723AA55760002AEFA /* Shop.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +40,8 @@
 		F4A16E3323A919030001BDAF /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		F4F84A4023AA52910002AEFA /* gameOver.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOver.mp3; sourceTree = "<group>"; };
 		F4F84A4123AA52910002AEFA /* looseLife.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = looseLife.mp3; sourceTree = "<group>"; };
-		F4F84A4423AA55530002AEFA /* GameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOver.sks; sourceTree = "<group>"; };
-		F4F84A4723AA55760002AEFA /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
+		F4F84A4423AA55530002AEFA /* Shop.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Shop.sks; sourceTree = "<group>"; };
+		F4F84A4723AA55760002AEFA /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +128,8 @@
 		F4F84A4623AA55620002AEFA /* GameOver */ = {
 			isa = PBXGroup;
 			children = (
-				F4F84A4423AA55530002AEFA /* GameOver.sks */,
-				F4F84A4723AA55760002AEFA /* GameOver.swift */,
+				F4F84A4423AA55530002AEFA /* Shop.sks */,
+				F4F84A4723AA55760002AEFA /* Shop.swift */,
 			);
 			path = GameOver;
 			sourceTree = "<group>";
@@ -200,7 +200,7 @@
 				F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */,
 				F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */,
 				F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */,
-				F4F84A4523AA55530002AEFA /* GameOver.sks in Resources */,
+				F4F84A4523AA55530002AEFA /* Shop.sks in Resources */,
 				F4F84A4223AA52910002AEFA /* gameOver.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,7 +216,7 @@
 				F4A16E3423A919030001BDAF /* MenuScene.swift in Sources */,
 				F441EDC423A7ADE500F04944 /* GameViewController.swift in Sources */,
 				F441EDBC23A7ADE500F04944 /* AppDelegate.swift in Sources */,
-				F4F84A4823AA55760002AEFA /* GameOver.swift in Sources */,
+				F4F84A4823AA55760002AEFA /* Shop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
