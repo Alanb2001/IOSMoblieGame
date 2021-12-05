@@ -219,7 +219,7 @@ extension GameScene: SKPhysicsContactDelegate {
         explosion.position = alienNode.position
         addChild(explosion)
         
-        run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+        //run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
         
         alienNode.removeFromParent()
         
