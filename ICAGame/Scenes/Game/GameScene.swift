@@ -155,11 +155,8 @@ class GameScene: SKScene {
                 shopScene.moneyNeededCapacity = self.moneyNeededCapacity
                 shopScene.upgradeMoney = self.upgradeMoney
                 shopScene.moneyNeededMoney = self.moneyNeededMoney
-                shopScene.self.view?.presentScene(nil)
+                shopScene.scaleMode = .aspectFill
                 self.view?.presentScene(shopScene, transition: transition)
-                self.scene?.removeAllActions()
-                self.scene?.removeAllChildren()
-                self.scene?.removeFromParent()
             }
         }
     }

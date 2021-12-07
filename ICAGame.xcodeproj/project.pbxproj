@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29958E09275FBDFA00D2A170 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 29958E08275FBDFA00D2A170 /* GameScene.sks */; };
 		F441EDBC23A7ADE500F04944 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDBB23A7ADE500F04944 /* AppDelegate.swift */; };
 		F441EDC223A7ADE500F04944 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDC123A7ADE500F04944 /* GameScene.swift */; };
 		F441EDC423A7ADE500F04944 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDC323A7ADE500F04944 /* GameViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29958E08275FBDFA00D2A170 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		F441EDB823A7ADE500F04944 /* ICAGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ICAGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F441EDBB23A7ADE500F04944 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F441EDC123A7ADE500F04944 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				F441EDC123A7ADE500F04944 /* GameScene.swift */,
+				29958E08275FBDFA00D2A170 /* GameScene.sks */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				F441EDC723A7ADE500F04944 /* Main.storyboard in Resources */,
 				F441EDC923A7ADE600F04944 /* Assets.xcassets in Resources */,
 				F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */,
+				29958E09275FBDFA00D2A170 /* GameScene.sks in Resources */,
 				F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */,
 				F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */,
 				F4F84A4523AA55530002AEFA /* Shop.sks in Resources */,

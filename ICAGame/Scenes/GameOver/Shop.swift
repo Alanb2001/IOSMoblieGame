@@ -28,18 +28,8 @@ class Shop: SKScene {
         setupStarField()
         setupScoreNumberLabel()
         setupCapacityNumberLabel()
-        setupNewGameButton()
-        setupMenuButtonNode()
-        setupShakeButton()
-        setupUpgradeCapacityButton()
-        setupUpgradeMoneyButton()
     }
         
-    func setupMenuButtonNode() {
-        menuButtonNode = childNode(withName: "menuButton") as? SKSpriteNode
-        menuButtonNode.texture = SKTexture(imageNamed: "home")
-    }
-    
     func setupStarField() {
         starField = self.childNode(withName: "starField") as? SKEmitterNode
         starField.advanceSimulationTime(10)
@@ -53,26 +43,6 @@ class Shop: SKScene {
     func setupCapacityNumberLabel() {
         capacityNumberLabel = self.childNode(withName: "capacityNumberLabel") as? SKLabelNode
         capacityNumberLabel.text = "\(capacity)"
-    }
-    
-    func setupNewGameButton() {
-        newGameButtonNode = self.childNode(withName: "backToGameButton") as? SKSpriteNode
-        newGameButtonNode.texture = SKTexture(imageNamed: "gamepad")
-    }
-    
-    func setupShakeButton() {
-        shakeButtonNode = self.childNode(withName: "shakeButton") as? SKSpriteNode
-        shakeButtonNode.texture = SKTexture(imageNamed: "deviceTilt_right")
-    }
-    
-    func setupUpgradeCapacityButton() {
-        upgradeCapacityButtonNode = self.childNode(withName: "upgradeCapacityButton") as? SKSpriteNode
-        upgradeCapacityButtonNode.texture = SKTexture(imageNamed: "shoppingBasket")
-    }
-    
-    func setupUpgradeMoneyButton() {
-        upgradeMoneyButtonNode = self.childNode(withName: "upgradeMoneyButton") as? SKSpriteNode
-        upgradeMoneyButtonNode.texture = SKTexture(imageNamed: "coin")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -93,10 +63,12 @@ class Shop: SKScene {
             gameScene.moneyNeededCapacity = self.moneyNeededCapacity
             gameScene.upgradeMoney = self.upgradeMoney
             gameScene.moneyNeededMoney = self.moneyNeededMoney
+            gameScene.scaleMode = .aspectFill
             self.view?.presentScene(gameScene, transition: transition)
         } else if node[0].name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = SKScene(fileNamed: "MenuScene") as! MenuScene
+            gameOverScene.scaleMode = .aspectFill
             self.view?.presentScene(gameOverScene, transition: transition)
         } else if node[0].name == "shakeButton" {
             capacity -= 1
