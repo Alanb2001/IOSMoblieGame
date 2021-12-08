@@ -1,6 +1,5 @@
 import SpriteKit
 import GameplayKit
-import CoreMotion
 
 class GameScene: SKScene {
     
@@ -9,6 +8,8 @@ class GameScene: SKScene {
     var moneyLabel: SKLabelNode!
     var capacityLabel: SKLabelNode!
     var shopButton: SKSpriteNode!
+    var moneyNumberLabel: SKLabelNode!
+    var capacityNumberLabel: SKLabelNode!
     
     var money: Int = 0
     var capacity: Int = 0
@@ -22,9 +23,6 @@ class GameScene: SKScene {
     
     let alienCategory: UInt32 = 0x1 << 1
     let playerCategory: UInt32 = 0x1 << 0
-    
-    let motionManager = CMMotionManager()
-    var xAcceleration: CGFloat = 0
     
     let userDefaults = UserDefaults.standard
     
@@ -41,75 +39,39 @@ class GameScene: SKScene {
         setupPhisicsWord()
         setupScoreLabel()
         setupCapacityLabel()
-        setupShopButton()
         setupAliensAndAsteroids()
-        setupCoreMotion()
         movePlayerToLocation()
     }
-    
-    func setupCoreMotion() {
-        motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
-            if let accelerometerData = data {
-                let acceleration = accelerometerData.acceleration
-                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
-            }
-        }
-    }
-    
+
     func setupPhisicsWord() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
-        backgroundColor = .blue
     }
     
     func setupStarField() {
-        starField = SKEmitterNode(fileNamed: "Starfield")
-        starField.position = CGPoint(x: 0, y: self.frame.maxY)
+        starField = self.childNode(withName: "starField") as? SKEmitterNode
         starField.advanceSimulationTime(10)
-        addChild(starField)
-        starField.zPosition = -1
     }
     
     func setupPlayer() {
-        playerNode = SKSpriteNode(imageNamed: "spaceship")
-        playerNode.size = CGSize(width: 80, height: 80)
-        playerNode.position = CGPoint(x: frame.size.width / 2, y: playerNode.size.height / 2 + 20)
+        playerNode = self.childNode(withName: "player") as? SKSpriteNode
+
         playerNode.physicsBody = SKPhysicsBody(circleOfRadius: playerNode.size.width/2)
         
         playerNode.physicsBody?.categoryBitMask = playerCategory
         playerNode.physicsBody?.contactTestBitMask = alienCategory
         playerNode.physicsBody?.collisionBitMask = 0
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
-        
-        addChild(playerNode)
     }
     
     func setupScoreLabel() {
-        moneyLabel = SKLabelNode(text: "Money: 0")
-        moneyLabel.position = CGPoint(x: (moneyLabel.frame.width / 2) + 10, y: frame.size.height - 50)
-        moneyLabel.zPosition = 5
-        moneyLabel.fontSize = 25
-        moneyLabel.fontName = "AmericanTypewriter-Bold"
-        moneyLabel.color = .white
-        addChild(moneyLabel)
+        moneyNumberLabel = self.childNode(withName: "moneyNumberLabel") as? SKLabelNode
+        moneyNumberLabel.text = "\(money)"
     }
     
     func setupCapacityLabel() {
-        capacityLabel = SKLabelNode(text: "Capacity: 0")
-        capacityLabel.position = CGPoint(x: (capacityLabel.frame.width / 2) + 10, y: frame.size.height - 100)
-        capacityLabel.zPosition = 5
-        capacityLabel.fontSize = 25
-        capacityLabel.fontName = "AmericanTypewriter-Bold"
-        capacityLabel.color = .white
-        addChild(capacityLabel)
-    }
-    
-    func setupShopButton() {
-        shopButton = SKSpriteNode(imageNamed: "shoppingCart")
-        shopButton.position = CGPoint(x: (shopButton.frame.width / 2) + 10, y: frame.size.height - 150)
-        shopButton.zPosition = 5
-        addChild(shopButton)
+        capacityNumberLabel = self.childNode(withName: "capacityNumberLabel") as? SKLabelNode
+        capacityNumberLabel.text = "\(capacity)"
     }
     
     func setupAliensAndAsteroids() {
@@ -120,7 +82,7 @@ class GameScene: SKScene {
     @objc func addAliensAndAsteroids() {
         attackers = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: attackers) as! [String]
         let attacker = SKSpriteNode(imageNamed: attackers[0])
-        let attackerPosition = GKRandomDistribution(lowestValue: 0, highestValue: Int(frame.size.width))
+        let attackerPosition = GKRandomDistribution(lowestValue: -200, highestValue: Int(frame.size.width))
         let position = CGFloat(attackerPosition.nextInt())
         attacker.size = CGSize(width: 60, height: 60)
         attacker.position = CGPoint(x: position, y: frame.size.height + attacker.size.height)
@@ -135,7 +97,7 @@ class GameScene: SKScene {
         let animationDuration = 4.50
         
         var actionArray = [SKAction]()
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attacker.size.height), duration: animationDuration))
+        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attacker.size.height - 300), duration: animationDuration))
         actionArray.append(SKAction.removeFromParent())
         
         attacker.run(SKAction.sequence(actionArray))
@@ -146,7 +108,7 @@ class GameScene: SKScene {
         for touch in touches {
             location = touch.location(in: self)
             let nodesArray = nodes(at: location)
-            if nodesArray.first == shopButton {
+            if nodesArray.first?.name == "shopButton" {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let shopScene = SKScene(fileNamed: "Shop") as! Shop
                 shopScene.money = self.money
@@ -172,8 +134,8 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        moneyLabel.text = "Money: \(money)"
-        capacityLabel.text = "Capacity: \(capacity)"
+        moneyNumberLabel.text = "Money: \(money)"
+        capacityNumberLabel.text = "Capacity: \(capacity)"
         if (touched) {
             movePlayerToLocation()
         }
@@ -232,11 +194,10 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     override func didSimulatePhysics() {
-        playerNode.position.x += xAcceleration * 50
-        if playerNode.position.x < -40 {
+        if playerNode.position.x < -200 {
             playerNode.position = CGPoint(x: CGFloat(frame.size.width), y: playerNode.position.y)
-        } else if playerNode.position.x > frame.size.width  + 40 {
-            playerNode.position = CGPoint(x: -CGFloat(40), y: playerNode.position.y)
+        } else if playerNode.position.x > frame.size.width  + 200 {
+            playerNode.position = CGPoint(x: -CGFloat(200), y: playerNode.position.y)
         }
     }
 }

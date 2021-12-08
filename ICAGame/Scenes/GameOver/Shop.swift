@@ -1,9 +1,10 @@
 import SpriteKit
+import CoreMotion
 
 class Shop: SKScene {
     
     var starField: SKEmitterNode!
-    var scoreNumberLabel: SKLabelNode!
+    var moneyNumberLabel: SKLabelNode!
     var newGameButtonNode: SKSpriteNode!
     var menuButtonNode: SKSpriteNode!
     var capacityNumberLabel: SKLabelNode!
@@ -18,6 +19,9 @@ class Shop: SKScene {
     var upgradeMoney: Int = 1
     var moneyNeededMoney: Int = 1
     
+    let motionManager = CMMotionManager()
+    var xAcceleration: CGFloat = 0
+    
     let userDefaults = UserDefaults.standard
     
     deinit {
@@ -28,6 +32,7 @@ class Shop: SKScene {
         setupStarField()
         setupScoreNumberLabel()
         setupCapacityNumberLabel()
+        setupCoreMotion()
     }
         
     func setupStarField() {
@@ -36,8 +41,8 @@ class Shop: SKScene {
     }
     
     func setupScoreNumberLabel() {
-        scoreNumberLabel = self.childNode(withName: "scoreNumberLabel") as? SKLabelNode
-        scoreNumberLabel.text = "\(money)"
+        moneyNumberLabel = self.childNode(withName: "moneyNumberLabel") as? SKLabelNode
+        moneyNumberLabel.text = "\(money)"
     }
     
     func setupCapacityNumberLabel() {
@@ -46,17 +51,27 @@ class Shop: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        scoreNumberLabel.text = "Money: \(money)"
+        moneyNumberLabel.text = "Money: \(money)"
         capacityNumberLabel.text = "Capacity: \(capacity)"
+    }
+    
+    func setupCoreMotion() {
+        motionManager.accelerometerUpdateInterval = 0.2
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
+            if let accelerometerData = data {
+                let acceleration = accelerometerData.acceleration
+                self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         guard let location = touch?.location(in: self) else { return }
         let node = nodes(at: location)
-        if node[0].name == "backToGameButton" {
+        if node.first?.name == "backToGameButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameScene = GameScene(size: self.size)
+            let gameScene = SKScene(fileNamed: "GameScene") as! GameScene
             gameScene.money = self.money
             gameScene.capacity = self.capacity
             gameScene.upgradeCapacity = self.upgradeCapacity
@@ -65,25 +80,26 @@ class Shop: SKScene {
             gameScene.moneyNeededMoney = self.moneyNeededMoney
             gameScene.scaleMode = .aspectFill
             self.view?.presentScene(gameScene, transition: transition)
-        } else if node[0].name == "menuButton" {
+        } else if node.first?.name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = SKScene(fileNamed: "MenuScene") as! MenuScene
             gameOverScene.scaleMode = .aspectFill
             self.view?.presentScene(gameOverScene, transition: transition)
-        } else if node[0].name == "shakeButton" {
+        } else if node.first?.name == "shakeButton" {
+            //shakeButtonNode.position.x += xAcceleration * 50
             capacity -= 1
             money += 5 * upgradeMoney
             if capacity == -1 {
              capacity += 1
                 money -= 5 * upgradeMoney
             }
-        } else if node[0].name == "upgradeCapacityButton" {
+        } else if node.first?.name == "upgradeCapacityButton" {
             if money >= 50 * moneyNeededCapacity {
                 money -= 50 * moneyNeededCapacity
                 upgradeCapacity += 1
                 moneyNeededCapacity += 1
             }
-        } else if node[0].name == "upgradeMoneyButton" {
+        } else if node.first?.name == "upgradeMoneyButton" {
             if money >= 100 * moneyNeededMoney {
                 money -= 100 * moneyNeededMoney
                 upgradeMoney += 1
