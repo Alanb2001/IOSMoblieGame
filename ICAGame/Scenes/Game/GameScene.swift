@@ -19,7 +19,7 @@ class GameScene: SKScene {
     var moneyNeededMoney: Int = 1
 
     var gameTimer: Timer!
-    var attackers = ["meteor","alien"]
+    var attackers = ["GoldBar","GoldNugget"]
     
     let alienCategory: UInt32 = 0x1 << 1
     let playerCategory: UInt32 = 0x1 << 0
@@ -194,7 +194,7 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     override func didSimulatePhysics() {
-        if playerNode.position.x < -200 {
+        if playerNode.position.x < -250 {
             playerNode.position = CGPoint(x: CGFloat(frame.size.width), y: playerNode.position.y)
         } else if playerNode.position.x > frame.size.width  + 200 {
             playerNode.position = CGPoint(x: -CGFloat(200), y: playerNode.position.y)

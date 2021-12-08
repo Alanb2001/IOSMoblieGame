@@ -53,6 +53,7 @@ class Shop: SKScene {
     override func update(_ currentTime: TimeInterval) {
         moneyNumberLabel.text = "Money: \(money)"
         capacityNumberLabel.text = "Capacity: \(capacity)"
+        print(xAcceleration)
     }
     
     func setupCoreMotion() {
@@ -61,6 +62,26 @@ class Shop: SKScene {
             if let accelerometerData = data {
                 let acceleration = accelerometerData.acceleration
                 self.xAcceleration = CGFloat(acceleration.x) * 0.75 + self.xAcceleration * 0.25
+            }
+        }
+    }
+    
+    override func didSimulatePhysics() {
+        run(SKAction.wait(forDuration: 3)) {
+            if self.xAcceleration >= 0.3 {
+                self.capacity -= 1
+                self.money += 5 * self.upgradeMoney
+                if self.capacity == -1 {
+                    self.capacity += 1
+                    self.money -= 5 * self.upgradeMoney
+                }
+            } else if self.xAcceleration <= -0.3{
+                    self.capacity -= 1
+                    self.money += 5 * self.upgradeMoney
+                    if self.capacity == -1 {
+                        self.capacity += 1
+                        self.money -= 5 * self.upgradeMoney
+                }
             }
         }
     }
@@ -86,7 +107,6 @@ class Shop: SKScene {
             gameOverScene.scaleMode = .aspectFill
             self.view?.presentScene(gameOverScene, transition: transition)
         } else if node.first?.name == "shakeButton" {
-            //shakeButtonNode.position.x += xAcceleration * 50
             capacity -= 1
             money += 5 * upgradeMoney
             if capacity == -1 {

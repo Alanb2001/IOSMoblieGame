@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "GoldBar.png",
       "idiom" : "universal",
-      "filename" : "space-ship-icon.png",
       "scale" : "1x"
     },
     {
+      "filename" : "GoldBar-1.png",
       "idiom" : "universal",
-      "filename" : "space-ship-icon@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "GoldBar-2.png",
       "idiom" : "universal",
-      "filename" : "space-ship-icon@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
