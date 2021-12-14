@@ -6,10 +6,6 @@ class MenuScene: SKScene {
     var newGameButtonNode: SKSpriteNode!
     var gameTitleLabelNode: SKLabelNode!
     
-    deinit {
-        print("MenuScene done")
-    }
-    
     override func didMove(to view: SKView) {
         setupStartField()
     }

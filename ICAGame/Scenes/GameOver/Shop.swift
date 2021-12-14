@@ -5,12 +5,9 @@ class Shop: SKScene {
     
     var starField: SKEmitterNode!
     var moneyNumberLabel: SKLabelNode!
-    var newGameButtonNode: SKSpriteNode!
-    var menuButtonNode: SKSpriteNode!
     var capacityNumberLabel: SKLabelNode!
-    var shakeButtonNode: SKSpriteNode!
-    var upgradeCapacityButtonNode: SKSpriteNode!
-    var upgradeMoneyButtonNode: SKSpriteNode!
+    var cashNeededCapacityLabel: SKLabelNode!
+    var cashNeededMoneyLabel: SKLabelNode!
     
     var money: Int = 0
     var capacity: Int = 0
@@ -24,14 +21,12 @@ class Shop: SKScene {
     
     let userDefaults = UserDefaults.standard
     
-    deinit {
-        print("GameOverScene done")
-    }
-    
     override func didMove(to view: SKView) {
         setupStarField()
         setupScoreNumberLabel()
         setupCapacityNumberLabel()
+        setupCashNeededCapacityLabel()
+        setupCashNeededMoneyLabel()
         setupCoreMotion()
     }
         
@@ -50,10 +45,21 @@ class Shop: SKScene {
         capacityNumberLabel.text = "\(capacity)"
     }
     
+    func setupCashNeededCapacityLabel() {
+        cashNeededCapacityLabel = self.childNode(withName: "cashNeededCapacityLabel") as? SKLabelNode
+        cashNeededCapacityLabel.text = "\(moneyNeededCapacity)"
+    }
+    
+    func setupCashNeededMoneyLabel() {
+        cashNeededMoneyLabel = self.childNode(withName: "cashNeededMoneyLabel") as? SKLabelNode
+        cashNeededMoneyLabel.text = "\(moneyNeededMoney)"
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         moneyNumberLabel.text = "Money: \(money)"
         capacityNumberLabel.text = "Capacity: \(capacity)"
-        print(xAcceleration)
+        cashNeededCapacityLabel.text = "Needed: \(50 * moneyNeededCapacity)"
+        cashNeededMoneyLabel.text = "Needed: \(100 * moneyNeededMoney)"
     }
     
     func setupCoreMotion() {

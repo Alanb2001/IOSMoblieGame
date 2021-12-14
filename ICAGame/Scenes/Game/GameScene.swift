@@ -19,7 +19,7 @@ class GameScene: SKScene {
     var moneyNeededMoney: Int = 1
 
     var gameTimer: Timer!
-    var attackers = ["GoldBar","GoldNugget"]
+    var goldNodes = ["GoldBar","GoldNugget"]
     
     let alienCategory: UInt32 = 0x1 << 1
     let playerCategory: UInt32 = 0x1 << 0
@@ -29,17 +29,13 @@ class GameScene: SKScene {
     var touched : Bool = false
     var location = CGPoint.zero
     
-    deinit {
-        print("GameScene done")
-    }
-    
     override func didMove(to view: SKView) {
         setupStarField()
         setupPlayer()
         setupPhisicsWord()
         setupScoreLabel()
         setupCapacityLabel()
-        setupAliensAndAsteroids()
+        setupGold()
         movePlayerToLocation()
     }
 
@@ -74,33 +70,34 @@ class GameScene: SKScene {
         capacityNumberLabel.text = "\(capacity)"
     }
     
-    func setupAliensAndAsteroids() {
+    func setupGold() {
         let timeInterval = 0.50
-        gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAliensAndAsteroids), userInfo: nil, repeats: true)
+        gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addGold), userInfo: nil, repeats: true)
     }
     
-    @objc func addAliensAndAsteroids() {
-        attackers = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: attackers) as! [String]
-        let attacker = SKSpriteNode(imageNamed: attackers[0])
-        let attackerPosition = GKRandomDistribution(lowestValue: -200, highestValue: Int(frame.size.width))
-        let position = CGFloat(attackerPosition.nextInt())
-        attacker.size = CGSize(width: 60, height: 60)
-        attacker.position = CGPoint(x: position, y: frame.size.height + attacker.size.height)
-        attacker.physicsBody = SKPhysicsBody(circleOfRadius: attacker.size.width/2)
+    @objc func addGold() {
+        goldNodes = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: goldNodes) as! [String]
+        let gold = SKSpriteNode(imageNamed: goldNodes[0])
+        let goldPosition = GKRandomDistribution(lowestValue: -200, highestValue: 200)
+        let position = CGFloat(goldPosition.nextInt())
+        gold.size = CGSize(width: 60, height: 60)
+        gold.position = CGPoint(x: position, y: frame.size.height + gold.size.height)
+        gold.zPosition = -1
+        gold.physicsBody = SKPhysicsBody(circleOfRadius: gold.size.width/2)
         
-        attacker.physicsBody?.categoryBitMask = alienCategory
-        attacker.physicsBody?.contactTestBitMask = playerCategory
-        attacker.physicsBody?.collisionBitMask = 0
+        gold.physicsBody?.categoryBitMask = alienCategory
+        gold.physicsBody?.contactTestBitMask = playerCategory
+        gold.physicsBody?.collisionBitMask = 0
         
-        addChild(attacker)
+        addChild(gold)
         
         let animationDuration = 4.50
         
         var actionArray = [SKAction]()
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -attacker.size.height - 300), duration: animationDuration))
+        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -gold.size.height - 300), duration: animationDuration))
         actionArray.append(SKAction.removeFromParent())
         
-        attacker.run(SKAction.sequence(actionArray))
+        gold.run(SKAction.sequence(actionArray))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -166,21 +163,22 @@ extension GameScene: SKPhysicsContactDelegate {
             bodyWithMinCategoryBitMask = contact.bodyA
         }
         let isPlayerBody = (bodyWithMaxCategoryBitMask.categoryBitMask & playerCategory) != 0
-        let isAlienBody = (bodyWithMinCategoryBitMask.categoryBitMask & alienCategory) != 0
+        let isGoldBody = (bodyWithMinCategoryBitMask.categoryBitMask & alienCategory) != 0
         
-        if  isPlayerBody && isAlienBody {
-            torpedoDidCollideWithAlien(playerNode: bodyWithMaxCategoryBitMask.node as! SKSpriteNode, alienNode: bodyWithMinCategoryBitMask.node as! SKSpriteNode)
+        if  isPlayerBody && isGoldBody {
+            torpedoDidCollideWithAlien(playerNode: bodyWithMaxCategoryBitMask.node as! SKSpriteNode, goldNode: bodyWithMinCategoryBitMask.node as! SKSpriteNode)
         }
     }
     
-    func torpedoDidCollideWithAlien(playerNode: SKSpriteNode, alienNode: SKSpriteNode) {
+    func torpedoDidCollideWithAlien(playerNode: SKSpriteNode, goldNode: SKSpriteNode) {
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
-        explosion.position = alienNode.position
+        explosion.position = goldNode.position
+        explosion.zPosition = -1
         addChild(explosion)
         
-        //run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
         
-        alienNode.removeFromParent()
+        goldNode.removeFromParent()
         
         run(SKAction.wait(forDuration: 1)) {
             explosion.removeFromParent()
