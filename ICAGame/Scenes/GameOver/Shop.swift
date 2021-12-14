@@ -72,7 +72,7 @@ class Shop: SKScene {
         }
     }
     
-    override func didSimulatePhysics() {
+    override func did   SimulatePhysics() {
         run(SKAction.wait(forDuration: 3)) {
             if self.xAcceleration >= 0.3 {
                 self.capacity -= 1
@@ -115,6 +115,7 @@ class Shop: SKScene {
         } else if node.first?.name == "shakeButton" {
             capacity -= 1
             money += 5 * upgradeMoney
+            run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
             if capacity == -1 {
              capacity += 1
                 money -= 5 * upgradeMoney

@@ -166,11 +166,11 @@ extension GameScene: SKPhysicsContactDelegate {
         let isGoldBody = (bodyWithMinCategoryBitMask.categoryBitMask & alienCategory) != 0
         
         if  isPlayerBody && isGoldBody {
-            torpedoDidCollideWithAlien(playerNode: bodyWithMaxCategoryBitMask.node as! SKSpriteNode, goldNode: bodyWithMinCategoryBitMask.node as! SKSpriteNode)
+            bowlDidCollideWithGold(playerNode: bodyWithMaxCategoryBitMask.node as! SKSpriteNode, goldNode: bodyWithMinCategoryBitMask.node as! SKSpriteNode)
         }
     }
     
-    func torpedoDidCollideWithAlien(playerNode: SKSpriteNode, goldNode: SKSpriteNode) {
+    func bowlDidCollideWithGold(playerNode: SKSpriteNode, goldNode: SKSpriteNode) {
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
         explosion.position = goldNode.position
         explosion.zPosition = -1
