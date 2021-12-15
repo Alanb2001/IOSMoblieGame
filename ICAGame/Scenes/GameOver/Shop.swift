@@ -62,6 +62,7 @@ class Shop: SKScene {
         cashNeededMoneyLabel.text = "Needed: \(100 * moneyNeededMoney)"
     }
     
+    // This function sets up the accelerometer and its data so that it can be used for the game.
     func setupCoreMotion() {
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data: CMAccelerometerData?, error: Error?) in
@@ -72,7 +73,8 @@ class Shop: SKScene {
         }
     }
     
-    override func did   SimulatePhysics() {
+    // This function makes it so that when you tilt your phone left or right a certain amount you will get money from the gold collected using the accelerometer.
+    override func didSimulatePhysics() {
         run(SKAction.wait(forDuration: 3)) {
             if self.xAcceleration >= 0.3 {
                 self.capacity -= 1
@@ -81,7 +83,7 @@ class Shop: SKScene {
                     self.capacity += 1
                     self.money -= 5 * self.upgradeMoney
                 }
-            } else if self.xAcceleration <= -0.3{
+            } else if self.xAcceleration <=  -0.3{
                     self.capacity -= 1
                     self.money += 5 * self.upgradeMoney
                     if self.capacity == -1 {
@@ -92,6 +94,7 @@ class Shop: SKScene {
         }
     }
     
+    // This function allows you to back and forth between the game scene and the menu scene, as well as allowing you to get upgrades.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         guard let location = touch?.location(in: self) else { return }
@@ -106,27 +109,23 @@ class Shop: SKScene {
             gameScene.upgradeMoney = self.upgradeMoney
             gameScene.moneyNeededMoney = self.moneyNeededMoney
             gameScene.scaleMode = .aspectFill
+            run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
             self.view?.presentScene(gameScene, transition: transition)
         } else if node.first?.name == "menuButton" {
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = SKScene(fileNamed: "MenuScene") as! MenuScene
             gameOverScene.scaleMode = .aspectFill
-            self.view?.presentScene(gameOverScene, transition: transition)
-        } else if node.first?.name == "shakeButton" {
-            capacity -= 1
-            money += 5 * upgradeMoney
             run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
-            if capacity == -1 {
-             capacity += 1
-                money -= 5 * upgradeMoney
-            }
+            self.view?.presentScene(gameOverScene, transition: transition)
         } else if node.first?.name == "upgradeCapacityButton" {
+            run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
             if money >= 50 * moneyNeededCapacity {
                 money -= 50 * moneyNeededCapacity
                 upgradeCapacity += 1
                 moneyNeededCapacity += 1
             }
         } else if node.first?.name == "upgradeMoneyButton" {
+            run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
             if money >= 100 * moneyNeededMoney {
                 money -= 100 * moneyNeededMoney
                 upgradeMoney += 1

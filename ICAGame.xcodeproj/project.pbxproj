@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		292604C52768FACC00F31D12 /* switch_002.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 292604C42768FACC00F31D12 /* switch_002.mp3 */; };
+		2926C348276A057B00E14B33 /* switch_002.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2926C347276A057B00E14B33 /* switch_002.mp3 */; };
+		2926C34A276A084600E14B33 /* impactMining_002.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2926C349276A084600E14B33 /* impactMining_002.mp3 */; };
 		29958E09275FBDFA00D2A170 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 29958E08275FBDFA00D2A170 /* GameScene.sks */; };
 		F441EDBC23A7ADE500F04944 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDBB23A7ADE500F04944 /* AppDelegate.swift */; };
 		F441EDC223A7ADE500F04944 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDC123A7ADE500F04944 /* GameScene.swift */; };
 		F441EDC423A7ADE500F04944 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EDC323A7ADE500F04944 /* GameViewController.swift */; };
 		F441EDC723A7ADE500F04944 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F441EDC523A7ADE500F04944 /* Main.storyboard */; };
 		F441EDC923A7ADE600F04944 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F441EDC823A7ADE600F04944 /* Assets.xcassets */; };
-		F441EDD523A7BA5700F04944 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F441EDD323A7BA5600F04944 /* explosion.mp3 */; };
 		F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = F441EDD923A7BD3100F04944 /* Explosion.sks */; };
 		F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = F441EDDB23A7BD4800F04944 /* Starfield.sks */; };
 		F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F4A16E3123A916BE0001BDAF /* MenuScene.sks */; };
@@ -24,7 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		292604C42768FACC00F31D12 /* switch_002.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = switch_002.mp3; path = ../../../../Downloads/switch_002.mp3; sourceTree = "<group>"; };
+		2926C347276A057B00E14B33 /* switch_002.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = switch_002.mp3; sourceTree = "<group>"; };
+		2926C349276A084600E14B33 /* impactMining_002.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = impactMining_002.mp3; sourceTree = "<group>"; };
 		29958E08275FBDFA00D2A170 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		F441EDB823A7ADE500F04944 /* ICAGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ICAGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F441EDBB23A7ADE500F04944 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +34,6 @@
 		F441EDC623A7ADE500F04944 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F441EDC823A7ADE600F04944 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F441EDCD23A7ADE600F04944 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F441EDD323A7BA5600F04944 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		F441EDD923A7BD3100F04944 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		F441EDDB23A7BD4800F04944 /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		F4A16E3123A916BE0001BDAF /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
@@ -84,9 +84,9 @@
 		F441EDDF23A7BE5500F04944 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F441EDD323A7BA5600F04944 /* explosion.mp3 */,
+				2926C349276A084600E14B33 /* impactMining_002.mp3 */,
+				2926C347276A057B00E14B33 /* switch_002.mp3 */,
 				F441EDC823A7ADE600F04944 /* Assets.xcassets */,
-				292604C42768FACC00F31D12 /* switch_002.mp3 */,
 				F441EDCD23A7ADE600F04944 /* Info.plist */,
 				F441EDD923A7BD3100F04944 /* Explosion.sks */,
 				F441EDDB23A7BD4800F04944 /* Starfield.sks */,
@@ -189,13 +189,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F441EDD523A7BA5700F04944 /* explosion.mp3 in Resources */,
+				2926C348276A057B00E14B33 /* switch_002.mp3 in Resources */,
 				F441EDC723A7ADE500F04944 /* Main.storyboard in Resources */,
 				F441EDC923A7ADE600F04944 /* Assets.xcassets in Resources */,
 				F441EDDA23A7BD3100F04944 /* Explosion.sks in Resources */,
 				29958E09275FBDFA00D2A170 /* GameScene.sks in Resources */,
 				F441EDDC23A7BD4800F04944 /* Starfield.sks in Resources */,
-				292604C52768FACC00F31D12 /* switch_002.mp3 in Resources */,
+				2926C34A276A084600E14B33 /* impactMining_002.mp3 in Resources */,
 				F4A16E3223A916BE0001BDAF /* MenuScene.sks in Resources */,
 				F4F84A4523AA55530002AEFA /* Shop.sks in Resources */,
 			);

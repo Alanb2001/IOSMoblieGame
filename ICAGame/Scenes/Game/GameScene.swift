@@ -21,7 +21,7 @@ class GameScene: SKScene {
     var gameTimer: Timer!
     var goldNodes = ["GoldBar","GoldNugget"]
     
-    let alienCategory: UInt32 = 0x1 << 1
+    let goldCategory: UInt32 = 0x1 << 1
     let playerCategory: UInt32 = 0x1 << 0
     
     let userDefaults = UserDefaults.standard
@@ -51,11 +51,11 @@ class GameScene: SKScene {
     
     func setupPlayer() {
         playerNode = self.childNode(withName: "player") as? SKSpriteNode
-
+        
         playerNode.physicsBody = SKPhysicsBody(circleOfRadius: playerNode.size.width/2)
         
         playerNode.physicsBody?.categoryBitMask = playerCategory
-        playerNode.physicsBody?.contactTestBitMask = alienCategory
+        playerNode.physicsBody?.contactTestBitMask = goldCategory
         playerNode.physicsBody?.collisionBitMask = 0
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
     }
@@ -75,6 +75,7 @@ class GameScene: SKScene {
         gameTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addGold), userInfo: nil, repeats: true)
     }
     
+    // This function keeps all the information for the gold objects such as position, size and the physics, after that it spawns them into the scene.
     @objc func addGold() {
         goldNodes = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: goldNodes) as! [String]
         let gold = SKSpriteNode(imageNamed: goldNodes[0])
@@ -85,7 +86,7 @@ class GameScene: SKScene {
         gold.zPosition = -1
         gold.physicsBody = SKPhysicsBody(circleOfRadius: gold.size.width/2)
         
-        gold.physicsBody?.categoryBitMask = alienCategory
+        gold.physicsBody?.categoryBitMask = goldCategory
         gold.physicsBody?.contactTestBitMask = playerCategory
         gold.physicsBody?.collisionBitMask = 0
         
@@ -100,6 +101,7 @@ class GameScene: SKScene {
         gold.run(SKAction.sequence(actionArray))
     }
     
+    // This function allows the player to go to the shop if they tap the icon and this also transfers the important data between both scenes.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touched = true
         for touch in touches {
@@ -115,6 +117,7 @@ class GameScene: SKScene {
                 shopScene.upgradeMoney = self.upgradeMoney
                 shopScene.moneyNeededMoney = self.moneyNeededMoney
                 shopScene.scaleMode = .aspectFill
+                run(SKAction.playSoundFileNamed("switch_002.mp3", waitForCompletion: false))
                 self.view?.presentScene(shopScene, transition: transition)
             }
         }
@@ -163,20 +166,21 @@ extension GameScene: SKPhysicsContactDelegate {
             bodyWithMinCategoryBitMask = contact.bodyA
         }
         let isPlayerBody = (bodyWithMaxCategoryBitMask.categoryBitMask & playerCategory) != 0
-        let isGoldBody = (bodyWithMinCategoryBitMask.categoryBitMask & alienCategory) != 0
+        let isGoldBody = (bodyWithMinCategoryBitMask.categoryBitMask & goldCategory) != 0
         
         if  isPlayerBody && isGoldBody {
             bowlDidCollideWithGold(playerNode: bodyWithMaxCategoryBitMask.node as! SKSpriteNode, goldNode: bodyWithMinCategoryBitMask.node as! SKSpriteNode)
         }
     }
     
+    // This function if the player has collided with some gold and if it has it will be destroyed and your capacity will go up.
     func bowlDidCollideWithGold(playerNode: SKSpriteNode, goldNode: SKSpriteNode) {
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
         explosion.position = goldNode.position
         explosion.zPosition = -1
         addChild(explosion)
         
-        run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("impactMining_002.mp3", waitForCompletion: false))
         
         goldNode.removeFromParent()
         
@@ -188,14 +192,6 @@ extension GameScene: SKPhysicsContactDelegate {
         if capacity == 6 * upgradeCapacity
         {
             capacity -= 1
-        }
-    }
-    
-    override func didSimulatePhysics() {
-        if playerNode.position.x < -250 {
-            playerNode.position = CGPoint(x: CGFloat(frame.size.width), y: playerNode.position.y)
-        } else if playerNode.position.x > frame.size.width  + 200 {
-            playerNode.position = CGPoint(x: -CGFloat(200), y: playerNode.position.y)
         }
     }
 }
